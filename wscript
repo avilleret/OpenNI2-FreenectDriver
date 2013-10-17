@@ -16,11 +16,11 @@ def options(opt):
 	
 def configure(conf):
 	conf.env.CXXFLAGS = ['-std=c++0x', '-O2']
-	conf.load('compiler_cxx')
-	conf.check_cxx(lib='freenect', uselib_store='freenect')
-	
 	if platform.system() == 'Darwin':
 		conf.env.CXX = ['clang++'] # can remove if OSX has >= gcc-4.6
+	
+	conf.load('compiler_cxx')
+	conf.check_cxx(lib='freenect', uselib_store='freenect')
 
 def build(bld):
 	bld.shlib(
