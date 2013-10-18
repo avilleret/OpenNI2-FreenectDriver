@@ -60,6 +60,27 @@ namespace FreenectDriver {
     // from StreamBase
     OniBool isImageRegistrationModeSupported(OniImageRegistrationMode mode) { return (mode == ONI_IMAGE_REGISTRATION_OFF || mode == ONI_IMAGE_REGISTRATION_DEPTH_TO_COLOR); }
     
+    OniBool isPropertySupported(int propertyId) {
+      switch(propertyId) {
+        default:
+          return VideoStream::isPropertySupported(propertyId);
+        case ONI_STREAM_PROPERTY_HORIZONTAL_FOV:
+        case ONI_STREAM_PROPERTY_VERTICAL_FOV:
+        case ONI_STREAM_PROPERTY_MAX_VALUE:
+        case XN_STREAM_PROPERTY_GAIN:
+        case XN_STREAM_PROPERTY_CONST_SHIFT:
+        case XN_STREAM_PROPERTY_MAX_SHIFT:
+        case XN_STREAM_PROPERTY_PARAM_COEFF:
+        case XN_STREAM_PROPERTY_SHIFT_SCALE:
+        case XN_STREAM_PROPERTY_ZERO_PLANE_DISTANCE:
+        case XN_STREAM_PROPERTY_ZERO_PLANE_PIXEL_SIZE:
+        case XN_STREAM_PROPERTY_EMITTER_DCMOS_DISTANCE:
+        case XN_STREAM_PROPERTY_S2D_TABLE:
+        case XN_STREAM_PROPERTY_D2S_TABLE:
+          return true;
+      }
+    }
+    
     OniStatus getProperty(int propertyId, void* data, int* pDataSize) {
       switch (propertyId) {
         default:
