@@ -54,7 +54,7 @@ namespace FreenectDriver {
       if (!isImageRegistrationModeSupported(mode))
         return ONI_STATUS_NOT_SUPPORTED;
       image_registration_mode = mode;
-      return ONI_STATUS_OK;
+      return setVideoMode(video_mode);
     }
     
     // from StreamBase
