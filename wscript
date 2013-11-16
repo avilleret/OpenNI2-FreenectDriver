@@ -5,7 +5,7 @@ import platform
 
 
 APPNAME = 'FreenectDriver'
-VERSION = '1.1'
+VERSION = '1.2.0'
 
 top = '.'
 out = 'build'
@@ -28,7 +28,7 @@ def build(bld):
 		name = APPNAME,
 		vnum = VERSION,
 		install_path = None,
-		includes = ['extern/OpenNI-Linux-x64-2.2/Include', '/usr/include/libfreenect', '/usr/local/include/libfreenect'],
+		includes = ['extern/OpenNI-Linux-x64-2.2.0.33/Include', '/usr/include/libfreenect', '/usr/local/include/libfreenect'],
 		source = bld.path.ant_glob('src/*.cpp'),
 		
 		use = 'freenect',

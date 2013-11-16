@@ -18,65 +18,26 @@
 *  limitations under the License.                                            *
 *                                                                            *
 *****************************************************************************/
-#ifndef _ONI_C_ENUMS_H_
-#define _ONI_C_ENUMS_H_
+#include "OniPlatform.h"
 
-/** Possible failure values */
-typedef enum
-{
-	ONI_STATUS_OK = 0,
-	ONI_STATUS_ERROR = 1,
-	ONI_STATUS_NOT_IMPLEMENTED = 2,
-	ONI_STATUS_NOT_SUPPORTED = 3,
-	ONI_STATUS_BAD_PARAMETER = 4,
-	ONI_STATUS_OUT_OF_FLOW = 5,
-	ONI_STATUS_NO_DEVICE = 6,
-	ONI_STATUS_TIME_OUT = 102,
-} OniStatus;
+#define ONI_VERSION_MAJOR	2
+#define ONI_VERSION_MINOR	2
+#define ONI_VERSION_MAINTENANCE	0
+#define ONI_VERSION_BUILD	33
 
-/** The source of the stream */
-typedef enum
-{
-	ONI_SENSOR_IR = 1,
-	ONI_SENSOR_COLOR = 2,
-	ONI_SENSOR_DEPTH = 3,
+/** OpenNI version (in brief string format): "Major.Minor.Maintenance (Build)" */ 
+#define ONI_BRIEF_VERSION_STRING \
+	ONI_STRINGIFY(ONI_VERSION_MAJOR) "." \
+	ONI_STRINGIFY(ONI_VERSION_MINOR) "." \
+	ONI_STRINGIFY(ONI_VERSION_MAINTENANCE) \
+	" (Build " ONI_STRINGIFY(ONI_VERSION_BUILD) ")"
 
-} OniSensorType;
+/** OpenNI version (in numeric format): (OpenNI major version * 100000000 + OpenNI minor version * 1000000 + OpenNI maintenance version * 10000 + OpenNI build version). */
+#define ONI_VERSION (ONI_VERSION_MAJOR*100000000 + ONI_VERSION_MINOR*1000000 + ONI_VERSION_MAINTENANCE*10000 + ONI_VERSION_BUILD)
+#define ONI_CREATE_API_VERSION(major, minor) ((major)*1000 + (minor))
+#define ONI_API_VERSION ONI_CREATE_API_VERSION(ONI_VERSION_MAJOR, ONI_VERSION_MINOR)
 
-/** All available formats of the output of a stream */
-typedef enum
-{
-	// Depth
-	ONI_PIXEL_FORMAT_DEPTH_1_MM = 100,
-	ONI_PIXEL_FORMAT_DEPTH_100_UM = 101,
-	ONI_PIXEL_FORMAT_SHIFT_9_2 = 102,
-	ONI_PIXEL_FORMAT_SHIFT_9_3 = 103,
-
-	// Color
-	ONI_PIXEL_FORMAT_RGB888 = 200,
-	ONI_PIXEL_FORMAT_YUV422 = 201,
-	ONI_PIXEL_FORMAT_GRAY8 = 202,
-	ONI_PIXEL_FORMAT_GRAY16 = 203,
-	ONI_PIXEL_FORMAT_JPEG = 204,
-	ONI_PIXEL_FORMAT_YUYV = 205,
-} OniPixelFormat;
-
-typedef enum
-{
-	ONI_DEVICE_STATE_OK 		= 0,
-	ONI_DEVICE_STATE_ERROR		= 1,
-	ONI_DEVICE_STATE_NOT_READY 	= 2,
-	ONI_DEVICE_STATE_EOF 		= 3
-} OniDeviceState;
-
-typedef enum
-{
-	ONI_IMAGE_REGISTRATION_OFF				= 0,
-	ONI_IMAGE_REGISTRATION_DEPTH_TO_COLOR	= 1,
-} OniImageRegistrationMode;
-
-static const int ONI_TIMEOUT_NONE = 0;
-static const int ONI_TIMEOUT_FOREVER = -1;
-
-
-#endif // _ONI_C_ENUMS_H_
+/** OpenNI version (in string format): "Major.Minor.Maintenance.Build-Platform (MMM DD YYYY HH:MM:SS)". */ 
+#define ONI_VERSION_STRING \
+	ONI_BRIEF_VERSION_STRING  "-" \
+	ONI_PLATFORM_STRING " (" ONI_TIMESTAMP ")"
