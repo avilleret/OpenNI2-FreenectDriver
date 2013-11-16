@@ -35,6 +35,16 @@ namespace FreenectDriver {
 		}
     
     // from StreamBase
+    OniBool isPropertySupported(int propertyId) {
+      switch(propertyId) {
+        default:
+          return VideoStream::isPropertySupported(propertyId);
+        case ONI_STREAM_PROPERTY_HORIZONTAL_FOV:
+        case ONI_STREAM_PROPERTY_VERTICAL_FOV:
+          return true;
+      }
+    }
+    
     OniStatus getProperty(int propertyId, void* data, int* pDataSize) {
 			switch (propertyId) {
 				default:

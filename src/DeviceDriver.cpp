@@ -96,7 +96,12 @@ namespace FreenectDriver {
     }
     
     // todo: fill out properties
-    OniBool isPropertySupported(int propertyId) { return (getProperty(propertyId, nullptr, nullptr) != ONI_STATUS_NOT_SUPPORTED); }
+    OniBool isPropertySupported(int propertyId) {
+      if(propertyId == ONI_DEVICE_PROPERTY_IMAGE_REGISTRATION)
+        return true;
+      return false;
+    }
+    
     OniStatus getProperty(int propertyId, void* data, int* pDataSize) {
       switch (propertyId) {
         default:
