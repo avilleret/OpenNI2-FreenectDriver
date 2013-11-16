@@ -58,7 +58,8 @@ namespace FreenectDriver {
     VideoStream(Freenect::FreenectDevice* device) :
       device(device),
       frame_id(1),
-      mirroring(false) { }
+      mirroring(false),
+      cropping() { }
     //~VideoStream() { stop();  }
   
     void buildFrame(void* data, uint32_t timestamp) {
