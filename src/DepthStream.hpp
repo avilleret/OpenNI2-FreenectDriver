@@ -2,7 +2,7 @@
 
 #include <algorithm> // for transform()
 #include <cmath> // for M_PI
-#include <cstdio> // for memcpy
+#include <cstdio> // fror memcpy
 #include "libfreenect.hpp"
 #include "Driver/OniDriverAPI.h"
 #include "PS1080.h"
@@ -28,7 +28,7 @@ namespace FreenectDriver {
     static const unsigned long long ZERO_PLANE_DISTANCE_VAL = 120;
     static constexpr double ZERO_PLANE_PIXEL_SIZE_VAL = 0.10520000010728836;
     static constexpr double EMITTER_DCMOS_DISTANCE_VAL = 7.5;
-      
+
   private:
     typedef std::map< OniVideoMode, std::pair<freenect_depth_format, freenect_resolution> > FreenectDepthModeMap;
     static const OniSensorType sensor_type = ONI_SENSOR_DEPTH;
@@ -41,14 +41,14 @@ namespace FreenectDriver {
   public:
     DepthStream(Freenect::FreenectDevice* pDevice);
     //~DepthStream() { }
-    
+
     static OniSensorInfo getSensorInfo() {
       FreenectDepthModeMap supported_modes = getSupportedVideoModes();
       OniVideoMode* modes = new OniVideoMode[supported_modes.size()];
       std::transform(supported_modes.begin(), supported_modes.end(), modes, RetrieveKey());
       return { sensor_type, SIZE(modes), modes }; // sensorType, numSupportedVideoModes, pSupportedVideoModes
     }
-    
+
     OniImageRegistrationMode getImageRegistrationMode() const { return image_registration_mode; }
     OniStatus setImageRegistrationMode(OniImageRegistrationMode mode) {
       if (!isImageRegistrationModeSupported(mode))
@@ -56,10 +56,10 @@ namespace FreenectDriver {
       image_registration_mode = mode;
       return setVideoMode(video_mode);
     }
-    
+
     // from StreamBase
     OniBool isImageRegistrationModeSupported(OniImageRegistrationMode mode) { return (mode == ONI_IMAGE_REGISTRATION_OFF || mode == ONI_IMAGE_REGISTRATION_DEPTH_TO_COLOR); }
-    
+
     OniBool isPropertySupported(int propertyId) {
       switch(propertyId) {
         default:
@@ -80,12 +80,12 @@ namespace FreenectDriver {
           return true;
       }
     }
-    
+
     OniStatus getProperty(int propertyId, void* data, int* pDataSize) {
       switch (propertyId) {
         default:
           return VideoStream::getProperty(propertyId, data, pDataSize);
-  
+
         case ONI_STREAM_PROPERTY_HORIZONTAL_FOV:        // float (radians)
           if (*pDataSize != sizeof(float)) {
             printf("Unexpected size: %d != %lu\n", *pDataSize, sizeof(float));
@@ -107,7 +107,7 @@ namespace FreenectDriver {
           }
           *(static_cast<int*>(data)) = MAX_VALUE;
           return ONI_STATUS_OK;
-  
+
         case XN_STREAM_PROPERTY_PIXEL_REGISTRATION:     // XnPixelRegistration (get only)
         case XN_STREAM_PROPERTY_WHITE_BALANCE_ENABLED:  // unsigned long long
         case XN_STREAM_PROPERTY_HOLE_FILTER:            // unsigned long long
@@ -117,7 +117,7 @@ namespace FreenectDriver {
         case XN_STREAM_PROPERTY_DCMOS_RCMOS_DISTANCE:   // double
         case XN_STREAM_PROPERTY_CLOSE_RANGE:            // unsigned long long
           return ONI_STATUS_NOT_SUPPORTED;
-        
+
         case XN_STREAM_PROPERTY_GAIN:                   // unsigned long long
           if (*pDataSize != sizeof(unsigned long long)) {
             printf("Unexpected size: %d != %lu\n", *pDataSize, sizeof(unsigned long long));
