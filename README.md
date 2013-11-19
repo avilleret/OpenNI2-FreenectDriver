@@ -16,7 +16,7 @@ Build
 Install
 -------
 1. Download and unpack [OpenNI](http://www.openni.org/openni-sdk/) 2.2.0.33 or higher.
-2. Copy build/libFreenectDriver.so (Linux) or build/libFreenectDriver.dylib (OSX) to OpenNI2/Drivers/ in your OpenNI2 redist directory.
+2. Copy build/libFreenectDriver.so (Linux) or build/libFreenectDriver.dylib (OSX) to Samples/OpenNI2/Drivers/ and Redist/OpenNI2/Drivers/ in your OpenNI2 directory.
 
 __________________________________________________
 
