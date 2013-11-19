@@ -15,7 +15,12 @@ def options(opt):
 	opt.load('compiler_cxx')
 	
 def configure(conf):
-	conf.env.CXXFLAGS = ['-std=c++0x', '-O2']
+	# treat most warnings as errors
+	strict =  ['-Wall', '-Werror'] + \
+						['-Wno-reorder']     + \
+						['-Wno-unused-function'] # todo
+	
+	conf.env.CXXFLAGS = ['-std=c++0x', '-O2'] + strict
 	if platform.system() == 'Darwin':
 		conf.env.CXX = ['clang++'] # can remove if OSX has >= gcc-4.6
 	

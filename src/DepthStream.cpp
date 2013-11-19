@@ -72,8 +72,8 @@ void DepthStream::populateFrame(void* data, OniFrame* frame) const {
 	if (mirroring) {
 		target += frame->width;
 		
-		for (unsigned int y = 0; y < frame->height; y++) {
-			for (unsigned int x = 0; x < frame->width; x++) {
+		for (int y = 0; y < frame->height; y++) {
+			for (int x = 0; x < frame->width; x++) {
 				unsigned short value = *(source++);
 				*(target--) = value < DepthStream::MAX_VALUE ? value : 0;
 			}
@@ -83,8 +83,8 @@ void DepthStream::populateFrame(void* data, OniFrame* frame) const {
 		}
 	}
 	else {
-		for (unsigned int y = 0; y < frame->height; y++) {
-			for (unsigned int x = 0; x < frame->width; x++) {
+		for (int y = 0; y < frame->height; y++) {
+			for (int x = 0; x < frame->width; x++) {
 				unsigned short value = *(source++);
 				*(target++) = value < DepthStream::MAX_VALUE ? value : 0;
 			}

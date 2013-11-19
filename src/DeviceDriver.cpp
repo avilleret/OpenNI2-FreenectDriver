@@ -168,7 +168,7 @@ namespace FreenectDriver {
     }
     
     OniBool isCommandSupported(int propertyId) { return (invoke(propertyId, nullptr, sizeof(nullptr)) != ONI_STATUS_NOT_SUPPORTED); }
-    OniStatus invoke(int commandId, const void* data, int dataSize) {
+    OniStatus invoke(int commandId, void* data, int dataSize) {
       switch (commandId) {
         default:
         case ONI_DEVICE_COMMAND_SEEK: // OniSeek
@@ -198,7 +198,7 @@ namespace FreenectDriver {
     
     OniStatus initialize(oni::driver::DeviceConnectedCallback connectedCallback, oni::driver::DeviceDisconnectedCallback disconnectedCallback, oni::driver::DeviceStateChangedCallback deviceStateChangedCallback, void* pCookie) {
       DriverBase::initialize(connectedCallback, disconnectedCallback, deviceStateChangedCallback, pCookie);
-      for (unsigned int i = 0; i < Freenect::deviceCount(); ++i) {
+      for (int i = 0; i < Freenect::deviceCount(); ++i) {
         std::ostringstream uri;
         uri << "freenect://" << i;
         OniDeviceInfo info;

@@ -58,7 +58,7 @@ void ColorStream::populateFrame(void* data, OniFrame* frame) const {
       unsigned char* data_ptr = static_cast<unsigned char*>(data);
       unsigned char* frame_data = static_cast<unsigned char*>(frame->data);
       if (mirroring) {
-        for (unsigned int i = 0; i < frame->dataSize; i += 3) {
+        for (int i = 0; i < frame->dataSize; i += 3) {
           // find corresponding mirrored pixel
           unsigned int pixel = i / 3;
           unsigned int row = pixel / video_mode.resolutionX;
