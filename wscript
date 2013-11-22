@@ -16,9 +16,11 @@ def options(opt):
 	
 def configure(conf):
 	# treat most warnings as errors
-	strict =  ['-Wall', '-Werror'] + \
-						['-Wno-reorder']     + \
-						['-Wno-unused-function'] # todo
+	strict =  ['-Wall', '-Werror']     + \
+						['-Wno-format']          + \
+						['-Wno-reorder']         + \
+						['-Wno-unused-function']     # todo
+						
 	
 	conf.env.CXXFLAGS = ['-std=c++0x', '-O2'] + strict
 	if platform.system() == 'Darwin':
