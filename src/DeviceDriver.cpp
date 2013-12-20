@@ -198,6 +198,7 @@ namespace FreenectDriver {
 
     OniStatus initialize(oni::driver::DeviceConnectedCallback connectedCallback, oni::driver::DeviceDisconnectedCallback disconnectedCallback, oni::driver::DeviceStateChangedCallback deviceStateChangedCallback, void* pCookie) {
       DriverBase::initialize(connectedCallback, disconnectedCallback, deviceStateChangedCallback, pCookie);
+      printf("Freenect::deviceCount() == %d", Freenect::deviceCount());
       for (int i = 0; i < Freenect::deviceCount(); ++i) {
         std::ostringstream uri;
         uri << "freenect://" << i;
@@ -229,6 +230,7 @@ namespace FreenectDriver {
         }
       }
 
+      printf("Could not find device %s", uri);
       getServices().errorLoggerAppend("Could not find device '%s'", uri);
       return nullptr;
     }
