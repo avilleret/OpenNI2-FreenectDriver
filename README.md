@@ -1,6 +1,14 @@
 OpenNI2-FreenectDriver
 ======================
 
+## Notice
+
+This project has been merged into [OpenKinect/libfreenect](https://github.com/OpenKinect/libfreenect).
+Follow the instructions in the [OpenNI2-FreenectDriver subproject](https://github.com/OpenKinect/libfreenect/tree/master/OpenNI2-FreenectDriver).
+This repository will remain until it is no longer useful.
+
+__________________________________________________
+
 FreenectDriver is a bridge to libfreenect implemented as an OpenNI2 driver. It allows use of Kinect hardware on Linux and OSX as supported by libfreenect. FreenectDriver is available under the Apache 2 license; copyright information appears in src/DeviceDriver.cpp and LICENSE.
 
 Dependencies

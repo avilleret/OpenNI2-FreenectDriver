@@ -10,7 +10,7 @@
 namespace FreenectDriver {
   class ColorStream : public VideoStream {
   public:
-    // from NUI library & converted to radians - please check
+    // from NUI library & converted to radians
     static const float DIAGONAL_FOV = 73.9 * (M_PI / 180);
     static const float HORIZONTAL_FOV = 62 * (M_PI / 180);
     static const float VERTICAL_FOV = 48.6 * (M_PI / 180);
