@@ -40,8 +40,8 @@ namespace FreenectDriver {
 
   public:
     Device(freenect_context* fn_ctx, int index) : Freenect::FreenectDevice(fn_ctx, index),
-      color(nullptr),
-      depth(nullptr) { }
+      color(NULL),
+      depth(NULL) { }
     ~Device() {
       destroyStream(color);
       destroyStream(depth);
@@ -64,7 +64,7 @@ namespace FreenectDriver {
       switch (sensorType) {
         default:
           //m_driverServices.errorLoggerAppend("FreenectDeviceNI: Can't create a stream of type %d", sensorType);
-          return nullptr;
+          return NULL;
         case ONI_SENSOR_COLOR:
           Freenect::FreenectDevice::startVideo();
           if (! color)
@@ -86,23 +86,25 @@ namespace FreenectDriver {
       if (pStream == color) {
         Freenect::FreenectDevice::stopVideo();
         delete color;
-        color = nullptr;
+        color = NULL;
       }
       if (pStream == depth) {
         Freenect::FreenectDevice::stopDepth();
         delete depth;
-        depth = nullptr;
+        depth = NULL;
       }
     }
 
     // todo: fill out properties
-    OniBool isPropertySupported(int propertyId) {
+    OniBool isPropertySupported(int propertyId)
+    {
       if(propertyId == ONI_DEVICE_PROPERTY_IMAGE_REGISTRATION)
         return true;
       return false;
     }
 
-    OniStatus getProperty(int propertyId, void* data, int* pDataSize) {
+    OniStatus getProperty(int propertyId, void* data, int* pDataSize)
+    {
       switch (propertyId) {
         default:
         case ONI_DEVICE_PROPERTY_FIRMWARE_VERSION:        // string
@@ -131,7 +133,8 @@ namespace FreenectDriver {
           return ONI_STATUS_OK;
       }
     }
-    OniStatus setProperty(int propertyId, const void* data, int dataSize) {
+    OniStatus setProperty(int propertyId, const void* data, int dataSize)
+    {
       switch (propertyId) {
         default:
         case ONI_DEVICE_PROPERTY_FIRMWARE_VERSION:        // By implementation
@@ -167,9 +170,20 @@ namespace FreenectDriver {
       }
     }
 
-    OniBool isCommandSupported(int propertyId) { return (invoke(propertyId, nullptr, sizeof(nullptr)) != ONI_STATUS_NOT_SUPPORTED); }
-    OniStatus invoke(int commandId, void* data, int dataSize) {
-      switch (commandId) {
+    OniBool isCommandSupported(int commandId) //{ return (invoke(propertyId, NULL, sizeof(NULL)) != ONI_STATUS_NOT_SUPPORTED); }
+    {
+      switch (commandId)
+      {
+        default:
+        case ONI_DEVICE_COMMAND_SEEK:
+          return false;
+      }
+    }
+    
+    OniStatus invoke(int commandId, void* data, int dataSize)
+    {
+      switch (commandId)
+      {
         default:
         case ONI_DEVICE_COMMAND_SEEK: // OniSeek
           return ONI_STATUS_NOT_SUPPORTED;
@@ -198,7 +212,6 @@ namespace FreenectDriver {
 
     OniStatus initialize(oni::driver::DeviceConnectedCallback connectedCallback, oni::driver::DeviceDisconnectedCallback disconnectedCallback, oni::driver::DeviceStateChangedCallback deviceStateChangedCallback, void* pCookie) {
       DriverBase::initialize(connectedCallback, disconnectedCallback, deviceStateChangedCallback, pCookie);
-      printf("Freenect::deviceCount() == %d", Freenect::deviceCount());
       for (int i = 0; i < Freenect::deviceCount(); ++i) {
         std::ostringstream uri;
         uri << "freenect://" << i;
@@ -206,14 +219,14 @@ namespace FreenectDriver {
         strncpy(info.uri, uri.str().c_str(), ONI_MAX_STR);
         strncpy(info.vendor, "Microsoft", ONI_MAX_STR);
         strncpy(info.name, "Kinect", ONI_MAX_STR);
-        devices[info] = nullptr;
+        devices[info] = NULL;
         deviceConnected(&info);
         deviceStateChanged(&info, 0);
       }
       return ONI_STATUS_OK;
     }
 
-    oni::driver::DeviceBase* deviceOpen(const char* uri, const char* mode = nullptr) {
+    oni::driver::DeviceBase* deviceOpen(const char* uri, const char* mode = NULL) {
       for (std::map<OniDeviceInfo, oni::driver::DeviceBase*>::iterator iter = devices.begin(); iter != devices.end(); ++iter) {
         if (strcmp(iter->first.uri, uri) == 0) { // found
           if (iter->second) // already open
@@ -230,15 +243,14 @@ namespace FreenectDriver {
         }
       }
 
-      printf("Could not find device %s", uri);
       getServices().errorLoggerAppend("Could not find device '%s'", uri);
-      return nullptr;
+      return NULL;
     }
 
     void deviceClose(oni::driver::DeviceBase* pDevice) {
       for (std::map<OniDeviceInfo, oni::driver::DeviceBase*>::iterator iter = devices.begin(); iter != devices.end(); ++iter) {
         if (iter->second == pDevice) {
-          iter->second = nullptr;
+          iter->second = NULL;
           unsigned int id;
           std::istringstream is(iter->first.uri);
           is.seekg(strlen("freenect://"));

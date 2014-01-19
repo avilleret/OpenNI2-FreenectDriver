@@ -11,9 +11,9 @@ namespace FreenectDriver {
   class ColorStream : public VideoStream {
   public:
     // from NUI library & converted to radians - please check
-    static constexpr float DIAGONAL_FOV = 73.9 * (M_PI / 180);
-    static constexpr float HORIZONTAL_FOV = 62 * (M_PI / 180);
-    static constexpr float VERTICAL_FOV = 48.6 * (M_PI / 180);
+    static const float DIAGONAL_FOV = 73.9 * (M_PI / 180);
+    static const float HORIZONTAL_FOV = 62 * (M_PI / 180);
+    static const float VERTICAL_FOV = 48.6 * (M_PI / 180);
 
   private:
     typedef std::map< OniVideoMode, std::pair<freenect_video_format, freenect_resolution> > FreenectVideoModeMap;
@@ -31,7 +31,8 @@ namespace FreenectDriver {
       FreenectVideoModeMap supported_modes = getSupportedVideoModes();
       OniVideoMode* modes = new OniVideoMode[supported_modes.size()];
       std::transform(supported_modes.begin(), supported_modes.end(), modes, RetrieveKey());
-      return { sensor_type, SIZE(modes), modes }; // sensorType, numSupportedVideoModes, pSupportedVideoModes
+      OniSensorInfo sensors = { sensor_type, static_cast<int>(supported_modes.size()), modes };
+      return sensors;
     }
 
     // from StreamBase

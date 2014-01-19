@@ -16,13 +16,12 @@ def options(opt):
 	
 def configure(conf):
 	# treat most warnings as errors
-	strict =  ['-Wall', '-Werror']     + \
-			  ['-Wno-format']          + \
-			  ['-Wno-reorder']         + \
-			  ['-Wno-unused-function']     # todo
-						
+	strict =  ['-Wall', '-Werror']           + \
+			  ['-Wno-gnu-static-float-init'] + \
+			  ['-Wno-unused-function']
+
+	conf.env.CXXFLAGS = ['-O2'] #+ strict
 	
-	conf.env.CXXFLAGS = ['-std=c++0x', '-O2'] #+ strict
 	if platform.system() == 'Darwin':
 		conf.env.CXX = ['clang++'] # can remove if OSX has >= gcc-4.6
 	
@@ -37,6 +36,5 @@ def build(bld):
 		install_path = None,
 		includes = ['extern/OpenNI-Linux-x64-2.2.0.33/Include', '/usr/include/libfreenect', '/usr/local/include/libfreenect'],
 		source = bld.path.ant_glob('src/*.cpp'),
-		
 		use = 'freenect',
 	)
